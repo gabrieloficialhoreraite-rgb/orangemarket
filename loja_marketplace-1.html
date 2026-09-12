@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OrangeMarket — Loja Online</title>
+<style>
+:root{--orange:#ff5a00;--orange2:#ff7900;--dark:#17212b;--muted:#69737d;--bg:#eef1f3;--line:#e1e5e8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--dark)}
+button,input,select{font:inherit}button{cursor:pointer}.app{max-width:520px;margin:auto;background:var(--bg);min-height:100vh}
+.promo{position:relative;background:#fff4eb;padding:14px 12px;display:grid;grid-template-columns:55px 1fr auto;align-items:center;gap:9px}
+.close{position:absolute;top:6px;left:9px;border:0;background:none;font-size:25px}.promoIcon{margin-left:20px;width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,#ff7200,#ed2911);color:#fff;display:grid;place-items:center;font-weight:900;font-size:28px}.promoText{text-align:center}.promoText b{font-size:16px}.promoText span{display:block;font-size:11px;margin-top:4px;color:#555}.promo button.offer{border:2px solid var(--orange);background:white;color:var(--orange);border-radius:22px;padding:8px 11px;font-weight:800;font-size:11px}
+.hero{background:linear-gradient(135deg,#ff4f00,#ff7900);padding:15px 12px 22px;color:#fff}.heroRow{display:grid;grid-template-columns:40px 1fr 43px;gap:8px;align-items:center}.back,.cart{background:none;color:white;border:0;font-size:34px}.cart{font-size:23px;position:relative}.badge{position:absolute;top:-3px;right:-3px;background:#e83b18;width:19px;height:19px;border-radius:50%;font-size:10px;display:grid;place-items:center}.search{height:47px;background:white;border-radius:25px;display:flex;align-items:center;padding:0 12px;gap:8px}.search span{font-size:22px;color:#56616b}.search input{border:0;outline:0;width:100%;font-size:14px}.hero h1{font-size:31px;line-height:1.02;margin:17px 4px 0}
+.cats{background:#fff;display:grid;grid-template-columns:repeat(3,1fr);padding:7px 8px 0}.cat{height:52px;border:0;background:#fff;color:#727b84;font-weight:800;position:relative}.cat.active{color:var(--orange)}.cat.active:after{content:"";position:absolute;left:12%;right:12%;bottom:0;height:4px;background:var(--orange);border-radius:5px}
+.products{padding:11px 9px 28px;display:grid;grid-template-columns:1fr 1fr;gap:10px}.card{background:white;border-radius:16px;padding:8px;box-shadow:0 2px 8px #1d29330d}.pic{height:145px;border-radius:12px;background:#f5f6f7;overflow:hidden;position:relative}.pic img{width:100%;height:100%;object-fit:contain}.discount{position:absolute;right:6px;top:6px;background:var(--orange);color:#fff;padding:6px 8px;border-radius:11px;font-weight:900;font-size:11px}.tag{display:inline-block;background:var(--orange);color:white;border-radius:10px;padding:5px 7px;font-size:10px;font-weight:900;margin:7px 0 3px}.tag.none{visibility:hidden}.name{font-weight:900;font-size:14px;line-height:1.15}.desc{font-size:10px;color:var(--muted);margin-top:4px}.rating{display:inline-flex;gap:5px;border:1px solid var(--line);border-radius:8px;padding:5px 7px;margin-top:7px;font-size:10px;font-weight:800}.star{color:#ffae00}.price{color:var(--orange);font-size:21px;font-weight:900;margin-top:7px}.old{font-size:9px;color:#89919a;text-decoration:line-through;margin-left:4px}
+.add{width:100%;margin-top:8px;border:0;border-radius:10px;background:#fff0e7;color:var(--orange);padding:9px;font-weight:900}
+
+.overlay{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:flex-end;justify-content:center}.modal{width:100%;max-width:520px;max-height:92vh;overflow:auto;background:#fff;border-radius:22px 22px 0 0;padding:18px}.modalHead{display:flex;justify-content:space-between;align-items:center}.modalHead h2{margin:0;font-size:22px}.x{border:0;background:#f1f2f3;border-radius:50%;width:35px;height:35px;font-size:21px}.cartItem{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}.cartItem img{width:65px;height:65px;object-fit:contain;background:#f5f5f5;border-radius:10px}.qty{display:flex;align-items:center;gap:7px;margin-top:5px}.qty button{width:25px;height:25px;border:0;border-radius:7px;background:#eee}.total{display:flex;justify-content:space-between;font-size:19px;font-weight:900;margin:15px 0}.primary{width:100%;border:0;border-radius:12px;background:var(--orange);color:#fff;padding:14px;font-weight:900}
+.form{display:grid;gap:10px}.form h3{margin:10px 0 0}.form label{font-size:11px;font-weight:800;color:#4e5962}.form input,.form select{width:100%;padding:12px;border:1px solid #d9dee2;border-radius:10px;outline:none;background:#fff}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.note{font-size:10px;color:#68727c;line-height:1.4;background:#f6f7f8;padding:10px;border-radius:10px}.success{text-align:center;padding:28px 5px}.success .check{font-size:52px}.empty{text-align:center;padding:30px;color:#68727c}
+@media(max-width:370px){.hero h1{font-size:28px}.pic{height:125px}.price{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="app">
+<section class="promo"><button class="close" onclick="this.parentElement.style.display='none'">×</button><div class="promoIcon">%</div><div class="promoText"><b>Ofertas imperdíveis!</b><span>Produtos com até 70% de desconto</span></div><button class="offer" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Ver ofertas</button></section>
+<section class="hero"><div class="heroRow"><button class="back" onclick="history.back()">‹</button><label class="search"><span>⌕</span><input id="search" placeholder="Pesquisar produtos..." oninput="renderProducts()"><span>⌾</span></label><button class="cart" onclick="openCart()">🛒<i id="cartBadge" class="badge">0</i></button></div><h1>Tudo o que você precisa<br>em um só lugar</h1></section>
+<nav class="cats"><button class="cat active" onclick="setCat(this,'Todos')">Todos</button><button class="cat" onclick="setCat(this,'Eletrônicos')">Eletrônicos</button><button class="cat" onclick="setCat(this,'Moda')">Moda</button></nav>
+<main id="products" class="products"></main>
+</div>
+
+<div id="cartOverlay" class="overlay"><div class="modal"><div class="modalHead"><h2>🛒 Seu carrinho</h2><button class="x" onclick="closeModal('cartOverlay')">×</button></div><div id="cartContent"></div></div></div>
+<div id="checkoutOverlay" class="overlay"><div class="modal"><div class="modalHead"><h2>Finalizar compra</h2><button class="x" onclick="closeModal('checkoutOverlay')">×</button></div><form id="checkout" class="form" onsubmit="finishOrder(event)">
+<h3>Seus dados</h3>
+<label>Nome completo<input required name="nome" autocomplete="name"></label>
+<div class="grid2"><label>CPF<input required name="cpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" oninput="maskCPF(this)"></label><label>Data de nascimento<input required name="nascimento" type="date"></label></div>
+<div class="grid2"><label>E-mail<input required name="email" type="email" autocomplete="email"></label><label>Telefone<input required name="telefone" inputmode="tel" autocomplete="tel"></label></div>
+<h3>Endereço de entrega</h3>
+<div class="grid2"><label>CEP<input required name="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" oninput="maskCEP(this)" onblur="lookupCEP(this.value)"></label><label>Número<input required name="numero"></label></div>
+<label>Rua<input required id="rua" name="rua" autocomplete="street-address"></label>
+<div class="grid2"><label>Bairro<input required id="bairro" name="bairro"></label><label>Complemento<input name="complemento"></label></div>
+<div class="grid2"><label>Cidade<input required id="cidade" name="cidade"></label><label>Estado<input required id="estado" name="estado"></label></div>
+<div class="note"><b>Privacidade:</b> os dados informados serão usados para identificar o comprador, entregar o pedido e entrar em contato sobre a compra. Não coloque dados de cartão neste formulário. Para uma loja real, o envio deve acontecer por HTTPS para um servidor seu e com política de privacidade/consentimento adequada à LGPD.</div>
+<label style="display:flex;gap:8px;align-items:flex-start;font-weight:700;font-size:11px">
+<input required type="checkbox" name="consent" style="width:auto;margin-top:2px">
+<span>Concordo com o uso dos meus dados para processar e entregar esta compra e para contato sobre o pedido.</span>
+</label>
+<button class="primary" type="submit">Enviar pedido e continuar para pagamento</button>
+</form></div></div>
+
+<div id="successOverlay" class="overlay"><div class="modal"><div class="success"><div class="check">✅</div><h2>Pedido preparado!</h2><p>O cadastro e o endereço foram validados neste protótipo. Para receber pagamentos reais, conecte um gateway de pagamento e um backend seguro.</p><button class="primary" onclick="location.reload()">Voltar à loja</button></div></div></div>
+
+<script>
+const products=[
+{id:1,cat:'Eletrônicos',name:'Fone de Ouvido Bluetooth',desc:'Sem fio com case de carga',price:39.90,old:89.90,discount:'-35%',tag:'Mais vendido',rating:'4.8',reviews:'12.693',img:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=85'},
+{id:2,cat:'Eletrônicos',name:'Smartphone',desc:'Tela ampla e câmera de alta resolução',price:499,old:899,discount:'-32%',tag:'Oferta especial',rating:'4.7',reviews:'8.421',img:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=700&q=85'},
+{id:3,cat:'Eletrônicos',name:'Smartwatch',desc:'Monitoramento e esportes',price:59.90,old:119.90,discount:'-40%',tag:'',rating:'4.6',reviews:'5.732',img:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=85'},
+{id:4,cat:'Moda',name:'Tênis Esportivo',desc:'Conforto para o dia a dia',price:69.90,old:139.90,discount:'-37%',tag:'Lançamento',rating:'4.9',reviews:'3.216',img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85'},
+{id:5,cat:'Moda',name:'Mochila Executiva',desc:'Espaçosa e resistente',price:44.90,old:99.90,discount:'-50%',tag:'Mais vendido',rating:'4.7',reviews:'6.541',img:'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=85'},
+{id:6,cat:'Eletrônicos',name:'Fone Premium',desc:'Som de alta qualidade',price:89.90,old:179.90,discount:'-28%',tag:'Lançamento',rating:'4.8',reviews:'9.348',img:'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=700&q=85'}
+];
+let category='Todos',cart=[];
+
+function money(v){return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+function renderProducts(){
+ const q=document.getElementById('search').value.toLowerCase();
+ const list=products.filter(p=>(category==='Todos'||p.cat===category)&&(!q||p.name.toLowerCase().includes(q)));
+ document.getElementById('products').innerHTML=list.map(p=>`<article class="card"><div class="pic"><img src="${p.img}" alt="${p.name}" loading="lazy"><span class="discount">${p.discount}</span></div>${p.tag?`<span class="tag">${p.tag}</span>`:'<span class="tag none">x</span>'}<div class="name">${p.name}</div><div class="desc">${p.desc}</div><div class="rating"><span class="star">★</span>${p.rating} <span>(${p.reviews})</span></div><div><span class="price">${money(p.price)}</span><span class="old">${money(p.old)}</span></div><button class="add" onclick="addToCart(${p.id})">Adicionar ao carrinho</button></article>`).join('');
+}
+function setCat(btn,c){category=c;document.querySelectorAll('.cat').forEach(x=>x.classList.remove('active'));btn.classList.add('active');renderProducts()}
+function addToCart(id){const item=cart.find(x=>x.id===id);item?item.qty++:cart.push({id,qty:1});updateBadge();openCart()}
+function updateBadge(){document.getElementById('cartBadge').textContent=cart.reduce((s,x)=>s+x.qty,0)}
+function openCart(){
+ document.getElementById('cartOverlay').style.display='flex';
+ const box=document.getElementById('cartContent');
+ if(!cart.length){box.innerHTML='<div class="empty">Seu carrinho está vazio.</div>';return}
+ let total=0;
+ box.innerHTML=cart.map(x=>{let p=products.find(y=>y.id===x.id);total+=p.price*x.qty;return `<div class="cartItem"><img src="${p.img}"><div style="flex:1"><b>${p.name}</b><div>${money(p.price)}</div><div class="qty"><button onclick="changeQty(${p.id},-1)">−</button>${x.qty}<button onclick="changeQty(${p.id},1)">+</button></div></div></div>`}).join('')+`<div class="total"><span>Total</span><span>${money(total)}</span></div><button class="primary" onclick="goCheckout()">Continuar para entrega</button>`;
+}
+function changeQty(id,d){let x=cart.find(y=>y.id===id);x.qty+=d;if(x.qty<=0)cart=cart.filter(y=>y.id!==id);updateBadge();openCart()}
+function goCheckout(){if(!cart.length)return;closeModal('cartOverlay');document.getElementById('checkoutOverlay').style.display='flex'}
+function closeModal(id){document.getElementById(id).style.display='none'}
+function maskCPF(i){let v=i.value.replace(/\D/g,'').slice(0,11);v=v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');i.value=v}
+function maskCEP(i){let v=i.value.replace(/\D/g,'').slice(0,8);if(v.length>5)v=v.slice(0,5)+'-'+v.slice(5);i.value=v}
+async function lookupCEP(v){
+ const cep=v.replace(/\D/g,'');if(cep.length!==8)return;
+ try{const r=await fetch('https://viacep.com.br/ws/'+cep+'/json/');const d=await r.json();if(!d.erro){rua.value=d.logradouro||'';bairro.value=d.bairro||'';cidade.value=d.localidade||'';estado.value=d.uf||''}}catch(e){}
+}
+async function finishOrder(e){
+  e.preventDefault();
+  const form=e.currentTarget;
+  const data=Object.fromEntries(new FormData(form).entries());
+  data.cart=cart.map(x=>{const p=products.find(y=>y.id===x.id);return {id:p.id,produto:p.name,quantidade:x.qty,preco:p.price}});
+  data.total=cart.reduce((s,x)=>{const p=products.find(y=>y.id===x.id);return s+p.price*x.qty},0);
+  data.createdAt=new Date().toISOString();
+
+  /*
+   * COLOQUE AQUI A URL DO SEU BACKEND SEGURO.
+   * Ex.: const SELLER_ENDPOINT = "https://seu-dominio.com/api/pedidos";
+   * O servidor deve autenticar o envio, usar HTTPS, proteger os dados
+   * e limitar o acesso aos pedidos.
+   */
+  const SELLER_ENDPOINT = "https://SEU-DOMINIO/api/orders";
+
+  try{
+    if(SELLER_ENDPOINT){
+      const response=await fetch(SELLER_ENDPOINT,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(data)
+      });
+      if(!response.ok) throw new Error("Falha ao enviar");
+    }else{
+      // Modo demonstração: guarda somente neste dispositivo.
+      const orders=JSON.parse(localStorage.getItem("orange_orders")||"[]");
+      orders.push(data);
+      localStorage.setItem("orange_orders",JSON.stringify(orders));
+    }
+    closeModal('checkoutOverlay');
+    document.getElementById('successOverlay').style.display='flex';
+  }catch(err){
+    alert("Não foi possível enviar o pedido agora. Tente novamente.");
+  }
+}
+renderProducts();
+</script>
+</body>
+</html>
